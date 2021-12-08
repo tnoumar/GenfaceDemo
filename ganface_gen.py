@@ -132,4 +132,4 @@ new_images = generator.easy_synthesize(new_codes, **synthesis_kwargs)['image']
 img_name=''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
 plt.imsave(tmp_dir+img_name+'.jpg', new_images.squeeze(0))
 
-def return_img(): return 'tmp_dir+img_name.jpg'; return_img
+print("\n"+tmp_dir+img_name+".jpg")

@@ -5,9 +5,19 @@ import streamlit as st
 import sys
 import tensorflow as tf
 import urllib
+import subprocess
+from PIL import Image
 
 
 
+
+def generate_image(age, eyeglasses, gender, pose, smile):
+  var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile)])
+  var_name=var.splitlines()[-1]
+  file_name=var_name.decode("utf-8") 
+  with open(file_name, "rb") as file:
+    img = Image.open(file_name)
+  return img
 
 
 def main():
@@ -64,20 +74,9 @@ def main():
     st.sidebar.caption(f"Streamlit version `{st.__version__}`")
 
     # Generate a new image from this feature vector (or retrieve it from the cache).
-    # with session.as_default():
-    #     image_out = generate_image(
-    #         session, pg_gan_model, tl_gan_model, features, feature_names
-    #     )
+    image_out = generate_image(0,0,0,0)    
+    st.image(image_out, use_column_width=True)
 
-    # st.image(image_out, use_column_width=True)
-
-
-
-def generate_image(styleGAN, features, feature_names):
-    """
-    Converts a feature vector into an image.
-    """
-    # return image
 
 USE_GPU = False
 if __name__ == "__main__":
