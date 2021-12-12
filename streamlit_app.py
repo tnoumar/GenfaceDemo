@@ -11,7 +11,7 @@ import os
 import glob
 import time
 favicons_dir="/content/GenfaceDemo/Favicons/"
-noise_seed=0
+
 
 def clear_img_dir():
   files = glob.glob('/content/downloaded_imgs/*.jpg')
@@ -33,6 +33,7 @@ def progress_bar():
      my_bar.progress(percent_complete + 1)
 
 def main():
+    noise_seed=0
     st.set_page_config("GenFace", favicons_dir+'favicon.ico' )
     st.title("GenFace's StyleGAN generator")
 
