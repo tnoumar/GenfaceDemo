@@ -82,7 +82,7 @@ def sample_latentcodes(generator, latent_space_type):
 
 if __name__ == "__main__":
     model_name = "stylegan_celebahq"  # @param ['pggan_celebahq','stylegan_celebahq', 'stylegan_ffhq']
-    latent_space_type = "Z"  # @param ['Z', 'W']
+    latent_space_type = "W"  # @param ['Z', 'W']
     ATTRS = ["age", "eyeglasses", "gender", "pose", "smile"]
     generator = build_generator(model_name)
     boundaries = select_model(model_name, generator, latent_space_type)
