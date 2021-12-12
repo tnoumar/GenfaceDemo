@@ -27,22 +27,14 @@ def generate_image(age, eyeglasses, gender, pose, smile):
 def progress_bar():
   my_bar = st.progress(0)
   for percent_complete in range(100):
-     time.sleep(0.5)
+     time.sleep(0.1)
      my_bar.progress(percent_complete + 1)
 
 def main():
-    st.title("GenFace StyleGAN demo")
+    st.set_page_config("GenFace", './favicons/favicon.ico' )
+    st.title("GenFace's StyleGAN generator")
 
     st.sidebar.title("Features")
-    # If the user doesn't want to select which features to control, these will be used.
-    default_control_features = ["Age", "Eyeglasses", "Gender", "Pose", "Smile"]
-
-
-
-    # # Insert user-controlled values from sliders into the feature vector.
-    # for feature in features:
-    #     features[feature] = st.sidebar.slider(feature, 0, 100, 50, 5)
-
     st.sidebar.title("Facial attributes")
     age=st.sidebar.slider(
      'Age',
@@ -71,8 +63,6 @@ def main():
       image_out = generate_image(age,eyeglasses,gender,pose,smile)    
       st.image(image_out, use_column_width=True)
 
-    else:
-      time.sleep(3)
 
     st.sidebar.write(
         """Playing with the sliders, you _will_ generate new **faces** that never existed before.
@@ -87,6 +77,5 @@ def main():
     # Generate a new image from this feature vector (or retrieve it from the cache).
 
 
-USE_GPU = False
 if __name__ == "__main__":
     main()
