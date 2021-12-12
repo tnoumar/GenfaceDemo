@@ -92,7 +92,7 @@ if __name__ == "__main__":
     gender = float(sys.argv[3])  # @param {type:"slider", min:-3.0, max:3.0, step:0.1}
     pose = float(sys.argv[4])  # @param {type:"slider", min:-3.0, max:3.0, step:0.1}
     smile = float(sys.argv[5])  # @param {type:"slider", min:-3.0, max:3.0, step:0.1}
-    noise_seed=float(sys.argv[6])  # @param changes when 
+    noise_seed=int(sys.argv[6])  # @param changes when 
     # define latent_codes
     latent_codes, synthesis_kwargs = sample_latentcodes(generator, latent_space_type,noise_seed)
     new_codes = latent_codes.copy()
