@@ -11,14 +11,15 @@ import os
 import glob
 import time
 favicons_dir="/content/GenfaceDemo/Favicons/"
+noise_seed=0
 
 def clear_img_dir():
   files = glob.glob('/content/downloaded_imgs/*.jpg')
   for f in files:
     os.remove(f)
     
-def generate_image(age, eyeglasses, gender, pose, smile, new_seed):
-  var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile)])
+def generate_image(age, eyeglasses, gender, pose, smile, seed):
+  var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile),str(seed)])
   var_name=var.splitlines()[-1]
   file_name=var_name.decode("utf-8") 
   with open(file_name, "rb") as file:
@@ -37,6 +38,11 @@ def main():
 
     st.sidebar.title("Features")
     st.sidebar.title("Facial attributes")
+
+    if st.sidebar.button('Generate a new face'):
+      noise_seed = random.randint(0, 1000)  # min:0, max:1000, step:1
+
+
 
     age=st.sidebar.slider(
      'Age',
@@ -58,12 +64,9 @@ def main():
      'Smile',
      -3.0, 3.0, 0.0)
     st.sidebar.write('Smile:', smile)
-
-    if st.sidebar.button('Generate'):
-      clear_img_dir()
-      image_out = generate_image(age,eyeglasses,gender,pose,smile)    
-      st.image(image_out, use_column_width=True)
-
+    clear_img_dir()  
+    image_out = generate_image(age,eyeglasses,gender,pose,smile,noise_seed)  
+    st.image(image_out, use_column_width=True)
 
     st.sidebar.write(
         """Playing with the sliders, you _will_ generate new **faces** that never existed before.
