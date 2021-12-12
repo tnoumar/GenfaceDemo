@@ -17,7 +17,7 @@ def clear_img_dir():
   for f in files:
     os.remove(f)
     
-def generate_image(age, eyeglasses, gender, pose, smile):
+def generate_image(age, eyeglasses, gender, pose, smile, new_seed):
   var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile)])
   var_name=var.splitlines()[-1]
   file_name=var_name.decode("utf-8") 
@@ -37,6 +37,7 @@ def main():
 
     st.sidebar.title("Features")
     st.sidebar.title("Facial attributes")
+
     age=st.sidebar.slider(
      'Age',
      -3.0, 3.0, 0.0)
