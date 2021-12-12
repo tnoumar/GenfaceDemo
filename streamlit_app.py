@@ -10,7 +10,7 @@ from PIL import Image
 import os
 import glob
 import time
-favicons_dir="/content/GenfaceDemo/Favicons/"
+favicons_dir="/content/GenfaceDemo/Favicon/"
 
 def clear_img_dir():
   files = glob.glob('/content/downloaded_imgs/*.jpg')
