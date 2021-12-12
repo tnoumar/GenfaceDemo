@@ -59,7 +59,7 @@ def main():
     st.sidebar.write('Smile:', smile)
 
     if st.sidebar.button('Generate'):
-      progress_bar()
+      #progress_bar()
       clear_img_dir()
       image_out = generate_image(age,eyeglasses,gender,pose,smile)    
       st.image(image_out, use_column_width=True)
