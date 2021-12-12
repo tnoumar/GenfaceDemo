@@ -10,6 +10,7 @@ from PIL import Image
 import os
 import glob
 import time
+favicons_dir="/content/GenfaceDemo/Favicons/"
 
 def clear_img_dir():
   files = glob.glob('/content/downloaded_imgs/*.jpg')
@@ -31,7 +32,7 @@ def progress_bar():
      my_bar.progress(percent_complete + 1)
 
 def main():
-    st.set_page_config("GenFace", './favicons/favicon.ico' )
+    st.set_page_config("GenFace", favicons_dir+'favicon.ico' )
     st.title("GenFace's StyleGAN generator")
 
     st.sidebar.title("Features")
