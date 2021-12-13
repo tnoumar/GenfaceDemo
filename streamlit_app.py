@@ -12,14 +12,13 @@ import glob
 import time
 import random
 favicons_dir="/content/GenfaceDemo/Favicons/"
-noise_seed=0
 
 def clear_img_dir():
   files = glob.glob('/content/downloaded_imgs/*.jpg')
   for f in files:
     os.remove(f)
     
-def generate_image(age, eyeglasses, gender, pose, smile, seed):
+def generate_image(age, eyeglasses, gender, pose, smile,noise_seed):
   var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile),str(seed)])
   var_name=var.splitlines()[-1]
   file_name=var_name.decode("utf-8") 
@@ -33,8 +32,13 @@ def progress_bar():
      time.sleep(0.1)
      my_bar.progress(percent_complete + 1)
 
-def main(prev_noise):
-    noise_seed=prev_noise
+def main():
+
+    f=open("/content/noise_seed.txt","r+")
+    noise_seed=int(f.read())
+    f.close()
+    
+    
     st.set_page_config("GenFace", favicons_dir+'favicon.ico' )
     st.title("GenFace's StyleGAN generator")
 
@@ -43,8 +47,9 @@ def main(prev_noise):
 
     if st.sidebar.button('Generate a new face'):
       noise_seed = random.randint(0, 1000)  # min:0, max:1000, step:1
-
-
+      f=open("/content/noise_seed.txt","w")
+      f.write(str(noise_seed))  #update noise seed
+      f.close()
 
     age=st.sidebar.slider(
      'Age',
@@ -81,7 +86,7 @@ def main(prev_noise):
     st.sidebar.caption(f"Streamlit version `{st.__version__}`")
 
     # Generate a new image from this feature vector (or retrieve it from the cache).
-    return noise_seed
+    
 
 if __name__ == "__main__":
-    noise_seed=main(noise_seed)
+    main()
