@@ -12,7 +12,7 @@ import glob
 import time
 import random
 favicons_dir="/content/GenfaceDemo/Favicons/"
-
+noise_seed=0
 
 def clear_img_dir():
   files = glob.glob('/content/downloaded_imgs/*.jpg')
@@ -33,8 +33,8 @@ def progress_bar():
      time.sleep(0.1)
      my_bar.progress(percent_complete + 1)
 
-def main():
-    noise_seed=0
+def main(prev_noise):
+    noise_seed=prev_noise
     st.set_page_config("GenFace", favicons_dir+'favicon.ico' )
     st.title("GenFace's StyleGAN generator")
 
@@ -81,7 +81,7 @@ def main():
     st.sidebar.caption(f"Streamlit version `{st.__version__}`")
 
     # Generate a new image from this feature vector (or retrieve it from the cache).
-
+    return noise_seed
 
 if __name__ == "__main__":
-    main()
+    noise_seed=main(noise_seed)
