@@ -39,7 +39,7 @@ def main():
       f.close()
     
     f=open("./noise_seed.txt","r")
-    noise_seed=int(f.read())
+    noise_seed=int(float(f.read()))
     f.close()
     
     
