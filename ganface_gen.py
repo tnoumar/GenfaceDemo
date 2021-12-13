@@ -12,6 +12,7 @@ import PIL.Image
 import torch
 import matplotlib.pyplot as plt
 import random
+
 # constants and paths
 if not os.path.exists("interfacegan/"):
   bashCommand = "git clone https://github.com/genforce/interfacegan.git interfacegan"

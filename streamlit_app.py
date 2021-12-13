@@ -10,6 +10,7 @@ from PIL import Image
 import os
 import glob
 import time
+import random
 favicons_dir="/content/GenfaceDemo/Favicons/"
 
 
