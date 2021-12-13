@@ -19,7 +19,7 @@ def clear_img_dir():
     os.remove(f)
     
 def generate_image(age, eyeglasses, gender, pose, smile,noise_seed):
-  var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile),str(seed)])
+  var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile),str(noise_seed)])
   var_name=var.splitlines()[-1]
   file_name=var_name.decode("utf-8") 
   with open(file_name, "rb") as file:
