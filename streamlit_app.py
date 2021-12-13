@@ -34,7 +34,7 @@ def progress_bar():
 
 def main():
 
-    f=open("./noise_seed.txt","r+")
+    f=open("./noise_seed.txt","a+")
     noise_seed=int(f.read())
     f.close()
     
