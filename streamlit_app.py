@@ -33,8 +33,12 @@ def progress_bar():
      my_bar.progress(percent_complete + 1)
 
 def main():
-
-    f=open("./noise_seed.txt","a+")
+    if not os.path.isfile("./noise_seed.txt"):
+      f=open("./noise_seed.txt","a+")
+      f.write("0")
+      f.close()
+    
+    f=open("./noise_seed.txt","r")
     noise_seed=int(f.read())
     f.close()
     
@@ -48,6 +52,7 @@ def main():
     if st.sidebar.button('Generate a new face'):
       noise_seed = random.randint(0, 1000)  # min:0, max:1000, step:1
       f=open("./noise_seed.txt","w")
+      f.truncate(0)
       f.write(str(noise_seed))  #update noise seed
       f.close()
 
