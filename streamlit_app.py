@@ -34,7 +34,7 @@ def progress_bar():
 
 def main():
 
-    f=open("/content/noise_seed.txt","r+")
+    f=open("./noise_seed.txt","r+")
     noise_seed=int(f.read())
     f.close()
     
@@ -47,7 +47,7 @@ def main():
 
     if st.sidebar.button('Generate a new face'):
       noise_seed = random.randint(0, 1000)  # min:0, max:1000, step:1
-      f=open("/content/noise_seed.txt","w")
+      f=open("./noise_seed.txt","w")
       f.write(str(noise_seed))  #update noise seed
       f.close()
 
