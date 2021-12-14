@@ -33,7 +33,7 @@ def progress_bar():
      my_bar.progress(percent_complete + 1)
 
 def main():
-    if not os.path.isfile("./noise_seed.txt"):
+    if not os.path.exists("./noise_seed.txt"):
       f=open("./noise_seed.txt","a+")
       f.write("0")
       f.close()
