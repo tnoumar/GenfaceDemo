@@ -14,12 +14,6 @@ import matplotlib.pyplot as plt
 import random
 
 # constants and paths
-if not os.path.exists("interfacegan/"):
-    bashCommand = (
-        "git clone https://github.com/genforce/interfacegan.git interfacegan"
-    )
-    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
 if not os.path.exists("interfacegan/models/pretrain/stylegan_celebahq.pth"):
     bashCommand = "wget https://www.dropbox.com/s/nmo2g3u0qt7x70m/stylegan_celebahq.pth?dl=1 -O interfacegan/models/pretrain/stylegan_celebahq.pth --quiet"
     process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
