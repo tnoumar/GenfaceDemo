@@ -12,7 +12,7 @@ import glob
 import time
 import random
 
-favicons_dir = "/content/GenfaceDemo/Favicons/"
+favicons_dir = "/content/GenfaceDemo/Favicon/"
 
 
 def clear_img_dir():
