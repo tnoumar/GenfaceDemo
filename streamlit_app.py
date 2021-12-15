@@ -10,39 +10,21 @@ from PIL import Image
 import os
 import glob
 import time
-
-# global variables
-# favicons_dir = "/content/GenfaceDemo/Favicon/"
-# age_dict = {"Child": -2.5, "Young": 0, "Old": 2.5}
-# gender_dict = {"Female": -2.5, "Neutral": 0, "Male": 2.5}
-# pose_dict = {"Left-sided": -2.5, "Symmetrical": 0, "Right-sided": 2.5}
-# smile_dict = {"Sad": -2.5, "Neutral": 0, "Happy": 2.5}
-
+import random
+favicons_dir="/content/GenfaceDemo/Favicons/"
 
 def clear_img_dir():
-    files = glob.glob("/content/downloaded_imgs/*.jpg")
-    for f in files:
-        os.remove(f)
-
-
-def generate_image(age, eyeglasses, gender, pose, smile):
-    var = subprocess.check_output(
-        [
-            "python",
-            "ganface_gen.py",
-            str(age),
-            str(eyeglasses),
-            str(gender),
-            str(pose),
-            str(smile),
-        ]
-    )
-    var_name = var.splitlines()[-1]
-    file_name = var_name.decode("utf-8")
-    with open(file_name, "rb") as file:
-        img = Image.open(file_name)
-    return img
-
+  files = glob.glob('/content/downloaded_imgs/*.jpg')
+  for f in files:
+    os.remove(f)
+    
+def generate_image(age, eyeglasses, gender, pose, smile,noise_seed):
+  var=subprocess.check_output(["python", "ganface_gen.py", str(age),str(eyeglasses),str(gender),str(pose),str(smile),str(noise_seed)])
+  var_name=var.splitlines()[-1]
+  file_name=var_name.decode("utf-8") 
+  with open(file_name, "rb") as file:
+    img = Image.open(file_name)
+  return img
 
 def progress_bar():
     my_bar = st.progress(0)
@@ -53,9 +35,28 @@ def progress_bar():
 
 def main():
     st.set_page_config("GenFace", favicons_dir + "favicon.ico")
+    if not os.path.exists("./noise_seed.txt"):
+      f=open("./noise_seed.txt","a+")
+      f.write("0")
+      f.close()
+    
+    f=open("./noise_seed.txt","r")
+    noise_seed=int(float(f.read()))
+    f.close()
+    
+    
+    st.set_page_config("GenFace", favicons_dir+'favicon.ico' )
     st.title("GenFace's StyleGAN generator")
 
     st.sidebar.title("Facial attributes")
+
+    if st.sidebar.button('Generate a new face'):
+      noise_seed = random.randint(0, 1000)  # min:0, max:1000, step:1
+      f=open("./noise_seed.txt","w")
+      f.truncate(0)
+      f.write(str(noise_seed))  #update noise seed
+      f.close()
+
     age=st.sidebar.slider(
      'Age',
      -3.0, 3.0, 0.0)
@@ -76,12 +77,9 @@ def main():
      'Smile',
      -3.0, 3.0, 0.0)
     st.sidebar.write('Smile:', smile)
-
-
-    if st.sidebar.button("Generate"):
-        clear_img_dir()
-        image_out = generate_image(age, eyeglasses, gender, pose, smile)
-        st.image(image_out, use_column_width=True)
+    clear_img_dir()  
+    image_out = generate_image(age,eyeglasses,gender,pose,smile,noise_seed)  
+    st.image(image_out, use_column_width=True)
 
     st.sidebar.write(
         """Playing with the sliders, you _will_ generate new **faces** that never existed before.
@@ -94,7 +92,7 @@ def main():
     st.sidebar.caption(f"Streamlit version `{st.__version__}`")
 
     # Generate a new image from this feature vector (or retrieve it from the cache).
-
+    
 
 if __name__ == "__main__":
   if not os.path.exists("interfacegan/"):

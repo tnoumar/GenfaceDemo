@@ -12,6 +12,7 @@ import PIL.Image
 import torch
 import matplotlib.pyplot as plt
 import random
+
 # constants and paths
 
 os.chdir("/content")
@@ -58,9 +59,8 @@ def select_model(model_name, generator, latent_space_type):
 """# Sample latent codes"""
 
 
-def sample_latentcodes(generator, latent_space_type):
-    num_samples = 1
-    noise_seed = random.randint(0, 1000)  # min:0, max:1000, step:1
+def sample_latentcodes(generator, latent_space_type,noise_seed):
+    num_samples = 1   
     latent_codes = sample_codes(generator, num_samples, latent_space_type, noise_seed)
     if generator.gan_type == "stylegan" and latent_space_type == "W":
         synthesis_kwargs = {"latent_space_type": "W"}
@@ -85,9 +85,9 @@ if __name__ == "__main__":
     gender = float(sys.argv[3])  # @param {type:"slider", min:-3.0, max:3.0, step:0.1}
     pose = float(sys.argv[4])  # @param {type:"slider", min:-3.0, max:3.0, step:0.1}
     smile = float(sys.argv[5])  # @param {type:"slider", min:-3.0, max:3.0, step:0.1}
-    
+    noise_seed=int(sys.argv[6])  # @param changes when 
     # define latent_codes
-    latent_codes, synthesis_kwargs = sample_latentcodes(generator, latent_space_type)
+    latent_codes, synthesis_kwargs = sample_latentcodes(generator, latent_space_type,noise_seed)
     new_codes = latent_codes.copy()
     for i, attr_name in enumerate(ATTRS):
         new_codes += boundaries[attr_name] * eval(attr_name)
