@@ -12,11 +12,11 @@ import glob
 import time
 
 # global variables
-favicons_dir = "/content/GenfaceDemo/Favicon/"
-age_dict = {"Child": -2.5, "Young": 0, "Old": 2.5}
-gender_dict = {"Female": -2.5, "Neutral": 0, "Male": 2.5}
-pose_dict = {"Left-sided": -2.5, "Symmetrical": 0, "Right-sided": 2.5}
-smile_dict = {"Sad": -2.5, "Neutral": 0, "Happy": 2.5}
+# favicons_dir = "/content/GenfaceDemo/Favicon/"
+# age_dict = {"Child": -2.5, "Young": 0, "Old": 2.5}
+# gender_dict = {"Female": -2.5, "Neutral": 0, "Male": 2.5}
+# pose_dict = {"Left-sided": -2.5, "Symmetrical": 0, "Right-sided": 2.5}
+# smile_dict = {"Sad": -2.5, "Neutral": 0, "Happy": 2.5}
 
 
 def clear_img_dir():
@@ -55,30 +55,28 @@ def main():
     st.set_page_config("GenFace", favicons_dir + "favicon.ico")
     st.title("GenFace's StyleGAN generator")
 
-    st.sidebar.title("Features")
     st.sidebar.title("Facial attributes")
+    age=st.sidebar.slider(
+     'Age',
+     -3.0, 3.0, 0.0)
+    st.sidebar.write('Age:', age)
+    eyeglasses=st.sidebar.slider(
+     'Eyeglasses',
+     -3.0, 3.0, 0.0)
+    st.sidebar.write('Eyeglasses:', eyeglasses)
+    gender=st.sidebar.slider(
+     'Gender',
+     -3.0, 3.0, 0.0)
+    st.sidebar.write('Gender:', gender)
+    pose=st.sidebar.slider(
+     'Pose',
+     -3.0, 3.0, 0.0)
+    st.sidebar.write('Pose:', pose)
+    smile=st.sidebar.slider(
+     'Smile',
+     -3.0, 3.0, 0.0)
+    st.sidebar.write('Smile:', smile)
 
-    # sliders
-    age = st.sidebar.select_slider("Age", options=["Child", "Young", "Old"])
-    age = age_dict[age]
-    st.sidebar.write("Age:", age)
-
-    eyeglasses = st.sidebar.select_slider("Eyeglasses", options=["Without", "With"])
-    eyeglasses = 3.0 if eyeglasses == "With" else -3.0
-    st.sidebar.write("Eyeglasses:", eyeglasses)
-
-    gender = st.sidebar.select_slider("Gender", options=["Female", "Neutral", "Male"])
-    gender = gender_dict[gender]
-    st.sidebar.write("Gender:", gender)
-    pose = st.sidebar.select_slider(
-        "Pose", options=["Left-sided", "Symmetrical", "Right-sided"]
-    )
-    pose = pose_dict[pose]
-    st.sidebar.write("Pose:", pose)
-
-    smile = st.sidebar.select_slider("Smile", options=["Sad", "Neutral", "Happy"])
-    smile = smile_dict[smile]
-    st.sidebar.write("Smile:", smile)
 
     if st.sidebar.button("Generate"):
         clear_img_dir()
@@ -99,4 +97,12 @@ def main():
 
 
 if __name__ == "__main__":
+  if not os.path.exists("interfacegan/"):
+    bashCommand = "git clone https://github.com/genforce/interfacegan.git interfacegan"
+    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
+  if not os.path.exists("interfacegan/models/pretrain/stylegan_celebahq.pth"):
+    bashCommand = "wget https://www.dropbox.com/s/nmo2g3u0qt7x70m/stylegan_celebahq.pth?dl=1 -O interfacegan/models/pretrain/stylegan_celebahq.pth --quiet"
+    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
     main()

@@ -13,14 +13,6 @@ import torch
 import matplotlib.pyplot as plt
 import random
 # constants and paths
-if not os.path.exists("interfacegan/"):
-  bashCommand = "git clone https://github.com/genforce/interfacegan.git interfacegan"
-  process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-  output, error = process.communicate()
-if not os.path.exists("interfacegan/models/pretrain/stylegan_celebahq.pth"):
-  bashCommand = "wget https://www.dropbox.com/s/nmo2g3u0qt7x70m/stylegan_celebahq.pth?dl=1 -O interfacegan/models/pretrain/stylegan_celebahq.pth --quiet"
-  process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-  output, error = process.communicate()
 
 os.chdir("/content")
 CODE_DIR = "interfacegan"
@@ -82,7 +74,7 @@ def sample_latentcodes(generator, latent_space_type):
 
 if __name__ == "__main__":
     model_name = "stylegan_celebahq"  # @param ['pggan_celebahq','stylegan_celebahq', 'stylegan_ffhq']
-    latent_space_type = "W"  # @param ['Z', 'W']
+    latent_space_type = "WP"  # @param ['Z', 'W']
     ATTRS = ["age", "eyeglasses", "gender", "pose", "smile"]
     generator = build_generator(model_name)
     boundaries = select_model(model_name, generator, latent_space_type)
