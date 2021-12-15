@@ -70,15 +70,22 @@ def main():
         f.close()
 
     age = st.sidebar.slider("Age", -3.0, 3.0, 0.0)
-    st.sidebar.write("Age:", age)
+    # st.sidebar.write("Age:", age)
     eyeglasses = st.sidebar.slider("Eyeglasses", -3.0, 3.0, 0.0)
-    st.sidebar.write("Eyeglasses:", eyeglasses)
+    # st.sidebar.write("Eyeglasses:", eyeglasses)
     gender = st.sidebar.slider("Gender", -3.0, 3.0, 0.0)
-    st.sidebar.write("Gender:", gender)
+    # st.sidebar.write("Gender:", gender)
     pose = st.sidebar.slider("Pose", -3.0, 3.0, 0.0)
-    st.sidebar.write("Pose:", pose)
+    # st.sidebar.write("Pose:", pose)
     smile = st.sidebar.slider("Smile", -3.0, 3.0, 0.0)
-    st.sidebar.write("Smile:", smile)
+    # st.sidebar.write("Smile:", smile)
+    st.sidebar.markdown(
+        """<style> .css-10y5sf6 { visibility: hidden;} 
+    .css-236p07{ visibility: hidden;}
+    [data-testid="stTickBarMax"]:after{ value:"Older";   visibility: visible;}
+     </style> """,
+        unsafe_allow_html=True,
+    )
     clear_img_dir()
     image_out = generate_image(age, eyeglasses, gender, pose, smile, noise_seed)
     st.image(image_out, use_column_width=True)
