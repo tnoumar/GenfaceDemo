@@ -52,7 +52,7 @@ def main():
     st.set_page_config("GenFace", favicons_dir + "favicon.ico")
     if not os.path.exists("./noise_seed.txt"):
         f = open("./noise_seed.txt", "a+")
-        f.write("0")
+        f.write("392")
         f.close()
 
     f = open("./noise_seed.txt", "r")
