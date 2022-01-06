@@ -1,19 +1,19 @@
 # import and utils for nvae
 
+#########################################################
+#this script downloads the model checkpoint loads it in cuda and stores it in pickle 
+#format for future use and speed considerations
 # this script should be executed before calling the streamlit app
 import sys
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
 import torch
-import tensorflow as tf
-from skimage import io, transform
-from torchvision import datasets, transforms
 import os
+import pickle
 
 #check if folder /content/downloaded_imgs exists
 tmp_download_folder = "/content/downloaded_imgs"
 CODE_DIR = "/content/GenfaceDemo/interfacenvae"
+model_path = "/content/GenfaceDemo/model.pkl" #storing model once loaded
+
 if not os.path.exists(tmp_download_folder):
   os.mkdir(tmp_download_folder)
 
@@ -34,4 +34,7 @@ except ImportError:
     urllib.request.urlretrieve("https://uu-sml.github.io/course-apml-public/lab/nvae.py", "nvae.py")
 
 # load nvae model celeba_256
-[] = nvae.load_pretrained_model("celeba_256a", CODE_DIR+"/")
+model = nvae.load_pretrained_model("celeba_256a", CODE_DIR+"/")
+model.to(device)
+with open(model_path, 'wb') as model_storage:
+  pickle.dump(model, model_storage)
