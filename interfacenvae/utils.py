@@ -23,6 +23,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # make sure that files in local directory can be imported
 sys.path.insert(0, ".")
+os.chdir("/content/GenfaceDemo")
 
 # try to import nvae module and download it if it fails
 import urllib
