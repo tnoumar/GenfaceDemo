@@ -103,8 +103,9 @@ def get_statedict(checkpoint):
         )
     )
 
-def load_pretrained_model(name):
-  filename = "checkpoint_{}.pt".format(name)
+def load_pretrained_model(name, destination_dir):
+  #destination dir should have the form absolutepathtodir/
+  filename = destination_dir+"checkpoint_{}.pt".format(name)
   # load saved checkpoint of model
   try:
     data = torch.load(filename, map_location='cpu')

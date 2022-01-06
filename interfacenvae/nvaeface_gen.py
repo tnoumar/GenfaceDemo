@@ -3,19 +3,16 @@ import torch
 import random
 import string
 import matplotlib.pyplot as plt
-import utils
 import os
+CODE_DIR = "/content/GenfaceDemo/interfacenvae"
+os.chdir(f"{CODE_DIR}")
+
 import nvae
 
 tmp_download_dir = "/content/downloaded_imgs/"
 if not os.path.exists(tmp_download_dir):
   os.mkdir(tmp_download_dir)
 
-
-os.chdir("/content")
-CODE_DIR = "interfacenvae"
-os.chdir(f"./{CODE_DIR}")
-tmp_download_dir = "/content/downloaded_imgs/"
 
 
 def inference_nvae(model, download_dir):
@@ -32,6 +29,6 @@ def inference_nvae(model, download_dir):
 
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = nvae.load_pretrained_model("celeba_256a")
+    model = nvae.load_pretrained_model("celeba_256a", CODE_DIR+"/")
     model=model.to(device)
     inference_nvae(model, tmp_download_dir)

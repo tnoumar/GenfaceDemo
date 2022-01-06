@@ -13,6 +13,7 @@ import os
 
 #check if folder /content/downloaded_imgs exists
 tmp_download_folder = "/content/downloaded_imgs"
+CODE_DIR = "/content/GenfaceDemo/interfacenvae"
 if not os.path.exists(tmp_download_folder):
   os.mkdir(tmp_download_folder)
 
@@ -33,4 +34,4 @@ except ImportError:
     urllib.request.urlretrieve("https://uu-sml.github.io/course-apml-public/lab/nvae.py", "nvae.py")
 
 # load nvae model celeba_256
-[] = nvae.load_pretrained_model("celeba_256a")
+[] = nvae.load_pretrained_model("celeba_256a", CODE_DIR+"/")
