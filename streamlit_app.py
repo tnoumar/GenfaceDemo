@@ -20,6 +20,12 @@ def clear_img_dir():
     for f in files:
         os.remove(f)
 
+def _update_slider():
+    st.session_state["age"] = 0
+    st.session_state["eyeglasses"] = 0
+    st.session_state["gender"] = 0
+    st.session_state["pose"] = 0
+    st.session_state["smile"] = 0
 
 def generate_image(age, eyeglasses, gender, pose, smile, noise_seed):
     var = subprocess.check_output(
@@ -59,18 +65,19 @@ def main():
         noise_seed = random.randint(0, 1000)  # min:0, max:1000, step:1
         f = open("./noise_seed.txt", "w")
         f.truncate(0)
+        _update_slider()
         f.write(str(noise_seed))  # update noise seed
         f.close()
 
-    age = st.sidebar.slider("Age", -3.0, 3.0, 0.0)
+    age = st.sidebar.slider(label="Age",key="age", min_value= -3.0, max_value=3.0, value=0.0)
     # st.sidebar.write("Age:", age)
-    eyeglasses = st.sidebar.slider("Eyeglasses", -3.0, 3.0, 0.0)
+    eyeglasses = st.sidebar.slider(label="Eyeglasses",key="eyeglasses", min_value= -3.0, max_value=3.0, value=0.0)
     # st.sidebar.write("Eyeglasses:", eyeglasses)
-    gender = st.sidebar.slider("Gender", -3.0, 3.0, 0.0)
+    gender = st.sidebar.slider(label="Gender",key="gender", min_value= -3.0, max_value=3.0, value=0.0)
     # st.sidebar.write("Gender:", gender)
-    pose = st.sidebar.slider("Pose", -3.0, 3.0, 0.0)
+    pose = st.sidebar.slider(label="Pose",key="pose", min_value= -3.0, max_value=3.0, value=0.0)
     # st.sidebar.write("Pose:", pose)
-    smile = st.sidebar.slider("Smile", -3.0, 3.0, 0.0)
+    smile = st.sidebar.slider(label="Smile",key="smile", min_value= -3.0, max_value=3.0, value=0.0)
     # st.sidebar.write("Smile:", smile)
     st.sidebar.markdown(
         """<style> .css-10y5sf6 { visibility: hidden;} 
